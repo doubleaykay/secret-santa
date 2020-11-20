@@ -57,3 +57,23 @@ print(pairings)
 # pickle the list of pairings
 
 # send emails to the pairs
+for pair in pairings:
+    # get dataframe rows for both people
+    p1 = data_pd.loc[data_pd['Name'] == pair[0]]
+    p2 = data_pd.loc[data_pd['Name'] == pair[1]]
+    
+    # get email address of person 1
+    p1_email = ''
+
+    # get info for person 2
+    p2_email = ''
+    p2_address = ''
+
+    # tell person 1 they need to gift to person 2
+    message_body = f"""
+    Hey {pair[0]}! The person you are sending a gift to is {pair[1]}.
+    Their email address is {p2_email}.
+    Their address is {p2_address}.
+
+    Happy gifting!
+    """
