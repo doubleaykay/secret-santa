@@ -7,11 +7,13 @@ import pickle
 
 # establish arguments and grab them from commandline
 # arg: path to excel
+path_to_excel = 'Secret_Santa_2020_Responses.xlsx'
 # arg: optional no go text file (add logic to not run no go check if need be)
+path_no_go = 'no-go.txt'
 # arg: path to pickle file
+path_pickle_file = ''
 
 # load excel into pandas data frame
-path_to_excel = 'Secret_Santa_2020_Responses.xlsx'
 data_pd = pd.read_excel(path_to_excel)
 
 # get Names column as list
@@ -19,7 +21,6 @@ names = data_pd['Name'].tolist()
 # print(names)
 
 # get and construct no-go pairings
-path_no_go = 'no-go.txt'
 no_go_list = []
 with open(path_no_go) as no_go_txt:
     no_go_lines = no_go_txt.readlines()
