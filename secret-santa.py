@@ -4,6 +4,8 @@
 import random
 import pandas as pd
 import pickle
+from os import path
+import smtplib
 
 # establish arguments and grab them from commandline
 # arg: path to excel
@@ -11,7 +13,11 @@ path_to_excel = 'Secret_Santa_2020_Responses.xlsx'
 # arg: optional no go text file (add logic to not run no go check if need be)
 path_no_go = 'no-go.txt'
 # arg: path to pickle file
-path_pickle_file = ''
+path_pickle_file = 'matches'
+
+# get gmail username and password
+gmail_user = input('Gmail Username: ')
+gmail_password = input('Gmail password: ')
 
 # load excel into pandas data frame
 data_pd = pd.read_excel(path_to_excel)
@@ -55,6 +61,16 @@ while not good:
 print(pairings)
 
 # pickle the list of pairings
+# if not path.exists(path_pickle_file):
+pickle.dump( pairings, open( path_pickle_file, "wb+" ) )
+
+# initiate SMTP connection
+try:
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+    server.ehlo()
+    server.login(gmail_user, gmail_password)
+except:
+    print('Something went wrong...')
 
 # send emails to the pairs
 for pair in pairings:
@@ -63,17 +79,30 @@ for pair in pairings:
     p2 = data_pd.loc[data_pd['Name'] == pair[1]]
     
     # get email address of person 1
-    p1_email = ''
+    p1_email = p1['Email Address'].values[0]
+    print(p1_email)
 
     # get info for person 2
-    p2_email = ''
-    p2_address = ''
+    p2_email = p2['Email Address'].values[0]
+    p2_address = p2['Address'].values[0]
+    # print(p2_address)
 
     # tell person 1 they need to gift to person 2
-    message_body = f"""
+    message_body = f"""Subject: SECRET SANTA MATCH
+
     Hey {pair[0]}! The person you are sending a gift to is {pair[1]}.
     Their email address is {p2_email}.
     Their address is {p2_address}.
 
+    Make sure the gift is delivered to them NO LATER than December 20, 2020!
+
+    Message Anoush if you have any questions.
+
     Happy gifting!
     """
+
+    # send the email
+    server.sendmail(gmail_user, p1_email, message_body)
+
+# close the mail server
+server.close()
