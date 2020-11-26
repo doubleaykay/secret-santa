@@ -90,6 +90,7 @@ for pair in pairings:
     # tell person 1 they need to gift to person 2
     message_body = f"""Subject: SECRET SANTA MATCH
 
+    NEW -- USE THIS!
     Hey {pair[0]}! The person you are sending a gift to is {pair[1]}.
     Their email address is {p2_email}.
     Their address is {p2_address}.
@@ -100,6 +101,21 @@ for pair in pairings:
 
     Happy gifting!
     """
+
+    # message_body = f"""From: TheSquadDoesSecretSanta <{gmail_user}>\n
+    # To: {pair[0]} <{gmail_user}>\n
+    # Subject: SECRET SANTA MATCH
+
+    # Hey {pair[0]}! The person you are sending a gift to is {pair[1]}.
+    # Their email address is {p2_email}.
+    # Their address is {p2_address}.
+
+    # Make sure the gift is delivered to them NO LATER than December 20, 2020!
+
+    # Message Anoush if you have any questions.
+
+    # Happy gifting!
+    # """
 
     # send the email
     server.sendmail(gmail_user, p1_email, message_body)
