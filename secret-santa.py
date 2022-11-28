@@ -1,5 +1,5 @@
 # Secret Santa Generator and Mailer
-# Anoush Khan, November 2020
+# Anoush Khan, November 2022
 
 import random
 import pandas as pd
@@ -9,11 +9,11 @@ import smtplib
 
 # establish arguments and grab them from commandline
 # arg: path to excel
-path_to_excel = 'Secret_Santa_2020_Responses.xlsx'
+path_to_excel = 'responses.xlsx'
 # arg: optional no go text file (add logic to not run no go check if need be)
 path_no_go = 'no-go.txt'
 # arg: path to pickle file
-path_pickle_file = 'matches'
+path_pickle_file = 'matches.bin'
 
 # get gmail username and password
 gmail_user = input('Gmail Username: ')
@@ -58,7 +58,7 @@ while not good:
     else:
         good = True
 
-print(pairings)
+# print(pairings)
 
 # pickle the list of pairings
 # if not path.exists(path_pickle_file):
@@ -88,14 +88,16 @@ for pair in pairings:
     # print(p2_address)
 
     # tell person 1 they need to gift to person 2
-    message_body = f"""Subject: SECRET SANTA MATCH
+    message_body = f"""Subject: NEW SECRET SANTA MATCH USE THIS
 
-    NEW -- USE THIS!
+    USE THIS NOT THE PREVIOUS ONE SORRY SORRY
     Hey {pair[0]}! The person you are sending a gift to is {pair[1]}.
     Their email address is {p2_email}.
     Their address is {p2_address}.
 
-    Make sure the gift is delivered to them NO LATER than December 20, 2020!
+    Even though we are planning to meet in person to guess secret santas and celebrate, please MAIL your gift to ensure anonymity.
+
+    Make sure the gift is delivered to them NO LATER than Saturday December 17, 2022!
 
     Message Anoush if you have any questions.
 
